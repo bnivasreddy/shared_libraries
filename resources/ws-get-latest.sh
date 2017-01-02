@@ -2,7 +2,7 @@
 if [ -e *.war ]; then rm *.war; fi
 
 # Artifactory location
-server=http://localhost:8082/artifactory
+server=http://localhost:8081/artifactory
 repo=libs-snapshot-local
 
 # Maven artifact location
