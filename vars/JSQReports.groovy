@@ -76,7 +76,7 @@ def getSonarMetrics(sonarUrl, sonarProjectId) {
     sonarXml = getSonarXml(sonarUrl, sonarProjectId)
 	// parse XML
         println "-------"
-	println sonarXML
+	println sonarXml
 	println "-------"
 	resources = new XmlSlurper().parseText(sonarXml)
 	projectResource = resources.resource[0]
