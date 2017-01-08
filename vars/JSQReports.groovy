@@ -118,7 +118,7 @@ def getSonarThresholds(jenkinsValues) {
 //	metricDefinitions.each { metricId, metricDefinition ->
 //		sonarThresholds[metricId] = safeParse(manager.build.getBuildVariables()[metricDefinition.thresholdName])
 	metricDefinitions.each { metricId, metricDefinition ->
-		sonarThresholds[metricId] = jenkinsValues.[metricDefinition.thresholdName]
+		sonarThresholds[metricId] = jenkinsValues[metricDefinition.thresholdName]
 	}
 	return sonarThresholds
 }
