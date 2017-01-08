@@ -201,10 +201,10 @@ def call(body) {
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = jenkinsValues
     body()
-    projectName = jenkinsValues[projectName]
-    emailRecipients = jenkinsValues[emailRecipients]
-    sonarProjectId = jenkinsValues[sonarProjectId]
-    sonarUrl = jenkinsValues[sonarUrl]
+    projectName = jenkinsValues.projectName
+    emailRecipients = jenkinsValues.emailRecipients
+    sonarProjectId = jenkinsValues.sonarProjectId
+    sonarUrl = jenkinsValues.sonarUrl
 
 // buildVars = manager.build.getBuildVariables()
 // configuration variables
