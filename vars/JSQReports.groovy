@@ -21,7 +21,7 @@ import javax.mail.internet.MimeMessage
 import javax.mail.Message
 import javax.mail.internet.InternetAddress
 import javax.mail.Transport
-import javax.xml.parsers
+
 
 
 def safeParse(value) {
