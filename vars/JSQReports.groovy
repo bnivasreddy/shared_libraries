@@ -22,9 +22,6 @@ import javax.mail.Message
 import javax.mail.internet.InternetAddress
 import javax.mail.Transport
 
-MAX_THRESHOLD_TYPE = 'MAX'
-MIN_THRESHOLD_TYPE = 'MIN'
-
 
 def safeParse(value) {
 	try {
@@ -187,6 +184,9 @@ def doFailure(projectName, emailRecipients, sonarMetrics, failedMetrics) {
 // main script starts here
 
 def call(body) {
+
+   MAX_THRESHOLD_TYPE = 'MAX'
+   MIN_THRESHOLD_TYPE = 'MIN'
 
    metricDefinitions = [
 					'violations_density':[name:'Rules Compliance', 		thresholdName:'rulesComplianceThreshold', thresholdType:MIN_THRESHOLD_TYPE],
