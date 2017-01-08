@@ -21,6 +21,7 @@ import javax.mail.internet.MimeMessage
 import javax.mail.Message
 import javax.mail.internet.InternetAddress
 import javax.mail.Transport
+import javax.xml.parsers
 
 
 def safeParse(value) {
@@ -73,11 +74,15 @@ def getSonarXml(sonarUrl, sonarProjectId) {
 
 def getSonarMetrics(sonarUrl, sonarProjectId) {
 	sonarMetrics = [:]
+	println "AAAA"
+	println sonarUrl
+	println "BBBB"
+	println sonarProjectId
     sonarXml = getSonarXml(sonarUrl, sonarProjectId)
 	// parse XML
-        println "-------"
+        println "CCCC"
 	println sonarXml
-	println "-------"
+	println "DDDD"
 	resources = new XmlSlurper().parseText(sonarXml)
 	projectResource = resources.resource[0]
 	metricDefinitions.each { addSonarMetric(sonarMetrics, it.key, projectResource) }
