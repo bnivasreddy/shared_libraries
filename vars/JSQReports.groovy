@@ -63,7 +63,6 @@ def prettyPrintMetrics(sonarMetrics, isHtml) {
 def addSonarMetric(metricsMap, sonarMetricId, sonarResource) {
 	metric = sonarResource.msr.find { it.key == sonarMetricId }
 	println "1111"
-	println it.key
 	println sonarMetricId
 	println "2222"
 	metricsMap[sonarMetricId] = safeParse(metric.val.text())
