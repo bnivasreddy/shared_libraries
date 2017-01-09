@@ -84,8 +84,14 @@ def getSonarMetrics(sonarUrl, sonarProjectId) {
 	println "BBBB"
 	println sonarXml
 	println "CCCC"
-	def resources = new XmlSlurper().parseText(sonarXml)
+	def resources = new XmlParser().parseText(sonarXml)
 	projectResource = resources.resource[0]
+	metricDefinitions.each {
+		println it.key	
+		metric = projectResource.msr.find { it.key }
+		sonarMetrics[it.key] = metric.val.text()
+
+	}
 	// metricDefinitions.each { addSonarMetric(sonarMetrics, it.key, projectResource) }
 	resources = null
 	return sonarMetrics
