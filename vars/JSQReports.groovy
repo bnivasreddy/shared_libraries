@@ -199,13 +199,10 @@ def call(body) {
    MIN_THRESHOLD_TYPE = 'MIN'
 
    metricDefinitions = [
-					'violations_density':[name:'Rules Compliance', 		thresholdName:'rulesComplianceThreshold', thresholdType:MIN_THRESHOLD_TYPE],
 					'violations':[name:'Total Violations', thresholdName:'violationsThreshold', thresholdType:MAX_THRESHOLD_TYPE],
 					'blocker_violations':[name:'Blocker Violations', thresholdName:'blockerThreshold', thresholdType:MAX_THRESHOLD_TYPE],
 					'critical_violations':[name:'Critical Violations', thresholdName:'criticalThreshold', thresholdType:MAX_THRESHOLD_TYPE],
 					'major_violations':[name:'Major Violations', thresholdName:'majorThreshold', thresholdType:MAX_THRESHOLD_TYPE],
-					'coverage':[name:'Code Coverage', thresholdName:'codeCoverageThreshold', thresholdType:MIN_THRESHOLD_TYPE],
-					'test_success_density':[name:'Test Success', thresholdName:'testSuccessThreshold', thresholdType:MIN_THRESHOLD_TYPE]
 					]
 
     def jenkinsValues = [:]
