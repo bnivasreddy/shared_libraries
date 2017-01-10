@@ -19,7 +19,7 @@ def call(body) {
     sonarProjectId = jenkinsValues.sonarProjectId
     sonarUrl = jenkinsValues.sonarUrl
 
-
+    def sonarMetrics = [:]
 
 
 
