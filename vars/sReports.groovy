@@ -21,7 +21,7 @@ def call(body) {
 
     def sonarMetrics = [:]
 
-	d metricsParam = metricDefinitions.keySet().join(',')
+	metricsParam = metricDefinitions.keySet().join(',')
 	sonarUrl = "${sonarUrl}/api/resources?resource=${sonarProjectId}&format=xml&metrics=${metricsParam}"
 	sonarXml = sonarUrl.toURL().text
         def resources = new XmlParser().parseText(sonarXml)
