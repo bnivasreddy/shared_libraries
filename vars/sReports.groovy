@@ -21,18 +21,50 @@ def call(body) {
 
     def sonarMetrics = [:]
 
-
-
-	metricsParam = metricDefinitions.keySet().join(',')
+metricsParam = metricDefinitions.keySet().join(',')
 	sonarUrl = "${sonarUrl}/api/resources?resource=${sonarProjectId}&format=xml&metrics=${metricsParam}"
 	sonarXml = sonarUrl.toURL().text
         def resources = new XmlParser().parseText(sonarXml)
 	println sonarXml
 	resources.resource[0].msr.each { msr ->
-  		println "msr key: ${msr.key.text()} msr val: ${msr.val.text()}"
-		sonarMetrics[msr.key.text()] = msr.val.text()
+  		sonarMetrics[msr.key.text()] = msr.val.text()
   	}
 	resources = null;
 
-	
+	float sonarVal
+	float jenkinsVal
+
+	def results = [:]
+	// iterate through the set of parameters
+	metricDefinitions.each { key, value ->
+		// get the key we should be searching for in the sonar map
+		jenkinsKey = value.thresholdName
+		metricValueInSonar = sonarMetrics[key]
+		jenkinsThreshold = jenkinsValues[jenkinsKey]
+		
+		// get the type of comparison we should be making
+		compType = value.thresholdType
+
+		// do the comparison
+		if (metricValueInSonar && jenkinsThreshold) {	
+		sonarVal = Float.parseFloat(metricValueInSonar);
+		jenkinsVal = Float.parseFloat(jenkinsThreshold);
+		if (jenkinsThreshold  && jenkinsThreshold != -1) {
+			if (compType == MAX_THRESHOLD_TYPE) {
+			  if (sonarVal > jenkinsVal)
+				results[key] = "The metric ${key} has a value ${metricValueInSonar} greater than the maximum threshold of ${jenkinsThreshold}."
+		}
+		else if (compType == MIN_THRESHOLD_TYPE) {
+			if (sonarVal < jenkinsVal)
+				results[key] = "The metric ${key} has a value ${metricValueInSonar} less than the minimum threshold of ${jenkinsThreshold}."
+		}
+		else {
+			results[key] = "An invalid configuration was detected for ${key}." 
+		}
+	}
+	}
+		results.each { rkey, rvalue ->
+			println "$rvalue"
+		}
+}
 }
