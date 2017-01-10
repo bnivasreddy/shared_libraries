@@ -55,13 +55,11 @@ def call(body) {
 		}
 
 		if (jenkinsThreshold  && jenkinsThreshold != -1 && diffVal) {
-			switch(diffVal) {
-		           case {it > 0  && compType == MAX_THRESHOLD_TYPE}: 
+		     if (diffVal > 0  && compType == MAX_THRESHOLD_TYPE) {  
 				results[key] = "The metric ${key} has a value ${metricValueInSonar} greater than the maximum threshold of ${jenkinsThreshold}."
-				break
-			   case {it < 0 && compType == MIN_THRESHOLD_TYPE}:
+			}	
+			else if (diffVal < 0 && compType == MIN_THRESHOLD_TYPE) {
 				results[key] = "The metric ${key} has a value ${metricValueInSonar} less than the minimum threshold of ${jenkinsThreshold}."
-			   break
 			}
 		}
 		else {
