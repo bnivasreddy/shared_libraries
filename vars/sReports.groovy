@@ -72,9 +72,6 @@ def call(body) {
 		results.each { rkey, rvalue ->
 			println "$rvalue"
 		}
-manager.addWarningBadge("There were ${results.size()} quality metric violations")
-	manager.addShortText("fail",'white','red', '1px', 'gray')
-	summary = manager.createSummary("warning.gif")
-	manager.buildFailure()
+	currentBuild.result = 'FAILURE'
 	}
 }
