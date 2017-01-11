@@ -29,7 +29,7 @@ def call(body) {
     // get the sonar data
 
     metricsParam = metricsToCheck.keySet().join(',')
-    sonarUrl = "${sonarUrl}/api/resources?resource=${sonarProjectId}&format=xml&metrics=${metricsParam}"
+    sonarUrl = "${jenkinsValues.sonarUrl}/api/resources?resource=${jenkinsValues.sonarProjectId}&format=xml&metrics=${metricsParam}"
     sonarXml = sonarUrl.toURL().text
     
     def resources = new XmlParser().parseText(sonarXml)
