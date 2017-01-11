@@ -1,3 +1,5 @@
+
+
 def getSonarData(sonarProjectId, sonarUrl, metricsToCheck) {
 	def sonarData = [:]
 
@@ -22,6 +24,10 @@ def getSonarData(sonarProjectId, sonarUrl, metricsToCheck) {
 
 
 def call(body) {
+
+
+
+
 
    // define the types of limits we have
 
@@ -50,7 +56,7 @@ def call(body) {
     // get the sonar data
     // sonarMetrics = getSonarData(jenkinsValues.sonarProjectId,jenkinsValues.sonarUrl,metricsToCheck)
 
-sonarMetrics = getSonarData(jenkinsValues.sonarProjectId, jenkinsValues.sonarUrl)
+sonarMetrics = getSonarData(jenkinsValues.sonarProjectId, jenkinsValues.sonarUrl, metricsToCheck)
 
 if (sonarMetrics) {	
 		sonarMetrics.each { rkey, rvalue ->
