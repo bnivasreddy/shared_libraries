@@ -1,9 +1,9 @@
-def getSonarData(sonarProjectId, sonarUrl) {
+def getSonarData(sonarProjectId, sonarUrl, metricsToCheck) {
 	def sonarData = [:]
 
 
 	
-	metricsParam = metricDefinitions.keySet().join(',')
+	metricsParam = metricsToCheck.keySet().join(',')
 	sonarUrl = "${sonarUrl}/api/resources?resource=${sonarProjectId}&format=xml&metrics=${metricsParam}"
 	sonarXml = sonarUrl.toURL().text
         def resources = new XmlParser().parseText(sonarXml)
@@ -48,7 +48,7 @@ def call(body) {
     def sonarMetrics = [:]
 
     // get the sonar data
-    // sonarMetrics = getSonarData(jenkinsValues.sonarProjectId,jenkinsValues.sonarUrl)
+    // sonarMetrics = getSonarData(jenkinsValues.sonarProjectId,jenkinsValues.sonarUrl,metricsToCheck)
 
 sonarMetrics = getSonarData(jenkinsValues.sonarProjectId, jenkinsValues.sonarUrl)
 
