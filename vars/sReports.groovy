@@ -38,6 +38,7 @@ def call(body) {
     println sonarXml
     resources.resource[0].msr.each { msr ->
   	sonarMetrics[msr.key.text()] = msr.val.text()
+	println "$msr.key.text(), $msr.val.text()"
     }
 
     if (sonarMetrics) {	
