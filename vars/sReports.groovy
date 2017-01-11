@@ -36,11 +36,11 @@ def call(body) {
     println sonarXml
     resources.resource[0].msr.findAll
     {it}.each { msr ->
-	sonarData[msr.key.text()] = msr.val.text()
+	sonarMetrics[msr.key.text()] = msr.val.text()
      }
 
-     if (sonarData) {	
-		sonarData.each { rkey, rvalue ->
+     if (sonarMetrics) {	
+		sonarMetrics.each { rkey, rvalue ->
 	   		println "$rkey $rvalue"
 		}
 	}
