@@ -1,5 +1,10 @@
 def call(body) {
 
+
+   
+    // declare a map to hold the sonar metrics we'll parse out of the xml
+    def sonarMetrics = [:]
+
    // define the types of limits we have
 
    HIGH_LIMIT_DEF = 'HIGH'
@@ -25,8 +30,6 @@ def call(body) {
     sonarProjectId = jenkinsValues.sonarProjectId
     sonarUrl = jenkinsValues.sonarUrl
 
-    // declare a map to hold the sonar metrics we'll parse out of the xml
-    def sonarMetrics = [:]
 
     // construct the REST API call to get the xml
     metricsList = metricsToCheck.keySet().join(',')
@@ -44,7 +47,7 @@ def call(body) {
 
 	resources.resource[0].msr.findAll
 	{it}.each { msr ->
-		sonarData[msr.key.text()] = msr.val.text()
+		sonarMetrics[msr.key.text()] = msr.val.text()
 		println "A"
 	}
 
