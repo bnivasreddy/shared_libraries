@@ -44,12 +44,18 @@ def call(body) {
 	// println "$msr.key.text(), $msr.val.text()"
 
     //}
+projectResource = resources.resource[0]
+metricsToCheck.each {
+		println it.key	
+		metric = projectResource.msr.find { it.key }
+		sonarMetrics[it.key] = metric.val.text()
 
-	resources.resource[0].msr.findAll
-	{it}.each { msr ->
-		sonarMetrics[msr.key.text()] = msr.val.text()
-		println "A"
 	}
+	// resources.resource[0].msr.findAll
+	// {it}.each { msr ->
+	//	sonarMetrics[msr.key.text()] = msr.val.text()
+	//	println "A"
+//	}
 
     if (sonarMetrics) {	
 		sonarMetrics.each { rkey, rvalue ->
