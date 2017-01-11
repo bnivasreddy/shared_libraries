@@ -28,6 +28,7 @@ def call(body) {
 	println sonarXml
 	resources.resource[0].msr.each { msr ->
   		sonarMetrics[msr.key.text()] = msr.val.text()
+		println "A"
   	}
 	resources = null;
 
