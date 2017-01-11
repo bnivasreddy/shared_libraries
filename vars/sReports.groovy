@@ -13,7 +13,7 @@ def getSonarData(sonarProjectId, sonarUrl, metricsToCheck) {
 	resources.resource[0].msr.each { msr ->
   		sonarData[msr.key.text()] = msr.val.text()
   	}
-	resources = null;
+	//resources = null;
 
 
 
