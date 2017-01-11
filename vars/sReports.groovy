@@ -22,8 +22,9 @@ def call(body) {
     def sonarMetrics = [:]
 
 	metricsParam = metricDefinitions.keySet().join(',')
-	sonarUrl = "${sonarUrl}/api/resources?resource=${sonarProjectId}&format=xml&metrics=${metricsParam}"
-	sonarXml = sonarUrl.toURL().text
+	sonarUrl2 = "${sonarUrl}/api/resources?resource=${sonarProjectId}&format=xml&metrics=${metricsParam}"
+	println "sonarUrl2 = $sonarUrl2"
+	sonarXml = sonarUrl2.toURL().text
         def resources = new XmlSlurper().parseText(sonarXml)
 	resources.resource[0].msr.each { msr ->
   		sonarMetrics[msr.key.text()] = msr.val.text()
