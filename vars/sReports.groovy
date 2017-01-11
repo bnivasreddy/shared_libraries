@@ -25,22 +25,9 @@ def call(body) {
 	sonarUrl = "${sonarUrl}/api/resources?resource=${sonarProjectId}&format=xml&metrics=${metricsParam}"
 	sonarXml = sonarUrl.toURL().text
         def resources = new XmlParser().parseText(sonarXml)
-	
-
-	projectResource = resources.resource[0]
-	metricDefinitions.each {
-		// println it.key	
-		metric = projectResource.msr.find { it.key }
-		sonarMetrics[it.key] = metric.val.text()
-		projectResource = resources.resource[0]
-
-	}
-	//resources.resource.msr.each { msr ->
-  	//	sonarMetrics[msr.key.text()] = msr.val.text()
-	//	println "ABC"
-  	// }
-
-// println sonarXml
+	resources.resource[0].msr.each { msr ->
+  		sonarMetrics[msr.key.text()] = msr.val.text()
+  	}
 	resources = null;
 
 	float sonarVal
@@ -84,7 +71,7 @@ def call(body) {
 		results.each { rkey, rvalue ->
 			println "$rvalue"
 		}
-	currentBuild.result = 'FAILURE'
+	error("Build did not pass")
 	}
 }
 
