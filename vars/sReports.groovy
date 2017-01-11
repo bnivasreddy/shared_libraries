@@ -36,11 +36,17 @@ def call(body) {
     //  parse the xml and fill in the map
     def resources = new XmlParser().parseText(sonarXml)
    // println sonarXml
-    resources.resource[0].msr.each { msr ->
-  	sonarMetrics[msr.key.text()] = msr.val.text()
-	println "$msr.key.text(), $msr.val.text()"
+   // resources.resource[0].msr.each { msr ->
+  	// sonarMetrics[msr.key.text()] = msr.val.text()
+	// println "$msr.key.text(), $msr.val.text()"
 
-    }
+    //}
+
+	resources.resource[0].msr.findAll
+	{it}.each { msr ->
+		sonarData[msr.key.text()] = msr.val.text()
+		println "A"
+	}
 
     if (sonarMetrics) {	
 		sonarMetrics.each { rkey, rvalue ->
