@@ -15,6 +15,11 @@ def getSonarData(sonarProjectId, sonarUrl, metricsToCheck) {
 		sonarData[msr.key.text()] = msr.val.text()
 	}
 	//resources = null;
+	if (sonarData) {	
+		sonarData.each { rkey, rvalue ->
+	   		println "$rkey $rvalue"
+		}
+	}
 
 
 
