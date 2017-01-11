@@ -1,12 +1,7 @@
 
 def call(body) {
 
-   // add the code to make this easily "callable" from the pipeline code 
-   body.resolveStrategy = Closure.DELEGATE_FIRST
-   body.delegate = jenkinsValues
-   body()
-
-
+  
    // define the types of limits we have
    HIGH_LIMIT_DEF = 'HIGH'
    LOW_LIMIT_DEF = 'LOW'
@@ -25,6 +20,11 @@ def call(body) {
     
     // declare a map to hold the sonar metrics we'll parse out of the xml
     def sonarMetrics = [:]
+
+    // add the code to make this easily "callable" from the pipeline code 
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = jenkinsValues
+    body()
 
     // get the sonar data
 
