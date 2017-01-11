@@ -25,11 +25,21 @@ def call(body) {
 	sonarUrl = "${sonarUrl}/api/resources?resource=${sonarProjectId}&format=xml&metrics=${metricsParam}"
 	sonarXml = sonarUrl.toURL().text
         def resources = new XmlParser().parseText(sonarXml)
-	println sonarXml
-	resources.resource.msr.each { msr ->
-  		sonarMetrics[msr.key.text()] = msr.val.text()
-		println "ABC"
-  	}
+	
+
+	projectResource = resources.resource[0]
+	metricDefinitions.each {
+		println it.key	
+		metric = projectResource.msr.find { it.key }
+		sonarMetrics[it.key] = metric.val.text()
+
+	}
+	//resources.resource.msr.each { msr ->
+  	//	sonarMetrics[msr.key.text()] = msr.val.text()
+	//	println "ABC"
+  	// }
+
+println sonarXml
 	resources = null;
 
 	float sonarVal
