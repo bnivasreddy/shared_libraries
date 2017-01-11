@@ -26,9 +26,9 @@ def call(body) {
 	sonarXml = sonarUrl.toURL().text
         def resources = new XmlParser().parseText(sonarXml)
 	println sonarXml
-	resources.resource[0].msr.each { msr ->
+	resources.resource.msr.each { msr ->
   		sonarMetrics[msr.key.text()] = msr.val.text()
-		println "A"
+		println "ABC"
   	}
 	resources = null;
 
