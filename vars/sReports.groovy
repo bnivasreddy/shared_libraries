@@ -72,6 +72,7 @@ def call(body) {
 		results.each { rkey, rvalue ->
 			println "$rvalue"
 		}
-	currentBuild.result = 'FAILURE'
+	error("Build did not pass sonar settings check")
+	// currentBuild.result = 'FAILURE'
 	}
 }
