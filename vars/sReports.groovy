@@ -8,8 +8,8 @@ def getSonarData(sonarProjectId,sonarUrl) {
     //  parse the xml and fill in the map
     def resources = new XmlParser().parseText(sonarXml)
     println sonarXml
-    resources.resource[0].msr.each { msr ->
-  	sonarData[msr.key.text()] = msr.val.text()
+    resources.msr.each { node ->
+  	sonarData[node.key.text()] = node.val.text()
     }
 
     // null this out so it doesn't cause a serialization issue back in the pipeline
