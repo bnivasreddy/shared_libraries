@@ -72,7 +72,8 @@ def call(body) {
 		results.each { rkey, rvalue ->
 			println "$rvalue"
 		}
-	error("Build did not pass")
+	
 	}
+error("Build did not pass")
 }
 
