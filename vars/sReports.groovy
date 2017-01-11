@@ -1,113 +1,78 @@
 def call(body) {
 
+   MAX_THRESHOLD_TYPE = 'MAX'
+   MIN_THRESHOLD_TYPE = 'MIN'
 
-   
-    // declare a map to hold the sonar metrics we'll parse out of the xml
-    def sonarMetrics = [:]
-
-   // define the types of limits we have
-
-   HIGH_LIMIT_DEF = 'HIGH'
-   LOW_LIMIT_DEF = 'LOW'
-
-   // define the set of metrics that we're interested in 
-   metricsToCheck = [
-					'violations':[desc:'Total Violations', jenkinsRef:'violationsThreshold', limitType:HIGH_LIMIT_DEF],
-					'blocker_violations':[desc:'Blocker Violations', jenkinsRef:'blockerThreshold', limitType:HIGH_LIMIT_DEF],
-					'critical_violations':[desc:'Critical Violations', jenkinsRef:'criticalThreshold', limitType:HIGH_LIMIT_DEF],
-					'major_violations':[desc:'Major Violations', jenkinsRef:'majorThreshold', limitType:HIGH_LIMIT_DEF],
+   metricDefinitions = [
+					'violations':[name:'Total Violations', thresholdName:'violationsThreshold', thresholdType:MAX_THRESHOLD_TYPE],
+					'blocker_violations':[name:'Blocker Violations', thresholdName:'blockerThreshold', thresholdType:MAX_THRESHOLD_TYPE],
+					'critical_violations':[name:'Critical Violations', thresholdName:'criticalThreshold', thresholdType:MAX_THRESHOLD_TYPE],
+					'major_violations':[name:'Major Violations', thresholdName:'majorThreshold', thresholdType:MAX_THRESHOLD_TYPE],
 					]
 
-    // delcare a map to hold the values passed in from jenkins
     def jenkinsValues = [:]
-    // add the code to make this easily "callable" from the pipeline code 
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = jenkinsValues
     body()
-
-    // set a few basic values
-    prjName = jenkinsValues.projectName
+    projectName = jenkinsValues.projectName
+    emailRecipients = jenkinsValues.emailRecipients
     sonarProjectId = jenkinsValues.sonarProjectId
     sonarUrl = jenkinsValues.sonarUrl
 
+    def sonarMetrics = [:]
 
-    // construct the REST API call to get the xml
-    metricsList = metricsToCheck.keySet().join(',')
-    sonarUrl = "${sonarUrl}/api/resources?resource=${sonarProjectId}&format=xml&metrics=${metricsList}"
-    sonarXml = sonarUrl.toURL().text
+	metricsParam = metricDefinitions.keySet().join(',')
+	sonarUrl = "${sonarUrl}/api/resources?resource=${sonarProjectId}&format=xml&metrics=${metricsParam}"
+	sonarXml = sonarUrl.toURL().text
+        def resources = new XmlParser().parseText(sonarXml)
+	println sonarXml
+	resources.resource[0].msr.each { msr ->
+  		sonarMetrics[msr.key.text()] = msr.val.text()
+  	}
+	resources = null;
 
-    //  parse the xml and fill in the map
-    def resources = new XmlParser().parseText(sonarXml)
-   // println sonarXml
-   // resources.resource[0].msr.each { msr ->
-  	// sonarMetrics[msr.key.text()] = msr.val.text()
-	// println "$msr.key.text(), $msr.val.text()"
+	float sonarVal
+	float jenkinsVal
 
-    //}
-projectResource = resources.resource[0]
-metricsToCheck.each {
-		println it.key	
-		metric = projectResource.msr.find { it.key }
-		sonarMetrics[it.key] = metric.val.text()
-
-	}
-	// resources.resource[0].msr.findAll
-	// {it}.each { msr ->
-	//	sonarMetrics[msr.key.text()] = msr.val.text()
-	//	println "A"
-//	}
-
-    if (sonarMetrics) {	
-		sonarMetrics.each { rkey, rvalue ->
-	   		println "$rkey $rvalue"
-		}
-	}
-    // null this out so it doesn't cause a serialization issue back in the pipeline
-   // resources = null;
-
-   //  do the math to see if we are over or under a limit as appropriate
-   float sonarVal
-   float jenkinsVal
-
-    def results = [:]
-    // iterate through the set of parameters
-    metricsToCheck.each { key, value ->
-       // get the key we should be searching for in the sonar map
-       jenkinsKey = value.thresholdName
-       metricValueInSonar = sonarMetrics[key]
-       jenkinsThreshold = jenkinsValues[jenkinsKey]
+	def results = [:]
+	// iterate through the set of parameters
+	metricDefinitions.each { key, value ->
+		// get the key we should be searching for in the sonar map
+		jenkinsKey = value.thresholdName
+		metricValueInSonar = sonarMetrics[key]
+		jenkinsThreshold = jenkinsValues[jenkinsKey]
 		
-       // get the type of comparison we should be making
-       compType = value.limitType
+		// get the type of comparison we should be making
+		compType = value.thresholdType
 
-       diffVal = null
+		diffVal = null
 
-       // do the comparison
-       if (metricValueInSonar && jenkinsThreshold) {	
-	  sonarVal = Float.parseFloat(metricValueInSonar)
-	  jenkinsVal = Float.parseFloat(jenkinsThreshold)
-	  diffVal = sonarVal - jenkinsVal
-       }
+		// do the comparison
+		if (metricValueInSonar && jenkinsThreshold) {	
+			sonarVal = Float.parseFloat(metricValueInSonar)
+			jenkinsVal = Float.parseFloat(jenkinsThreshold)
+			diffVal = sonarVal - jenkinsVal
+		}
 
-       if (jenkinsThreshold  && jenkinsThreshold != -1 && diffVal) {
-	  if (diffVal > 0  && compType == HIGH_LIMIT_DEF) {  
-		results[key] = "The metric ${key} has a value ${metricValueInSonar} greater than the maximum threshold of ${jenkinsThreshold}."
-	  }	
-	  else if (diffVal < 0 && compType == LOW_LIMIT_DEF) {
-	     results[key] = "The metric ${key} has a value ${metricValueInSonar} less than the minimum threshold of ${jenkinsThreshold}."
-	  }
-       }
-       else {
-		results[key] = "An invalid configuration was detected for ${key}." 
-       }
+		if (jenkinsThreshold  && jenkinsThreshold != -1 && diffVal) {
+		     if (diffVal > 0  && compType == MAX_THRESHOLD_TYPE) {  
+				results[key] = "The metric ${key} has a value ${metricValueInSonar} greater than the maximum threshold of ${jenkinsThreshold}."
+			}	
+			else if (diffVal < 0 && compType == MIN_THRESHOLD_TYPE) {
+				results[key] = "The metric ${key} has a value ${metricValueInSonar} less than the minimum threshold of ${jenkinsThreshold}."
+			}
+		}
+		else {
+			results[key] = "An invalid configuration was detected for ${key}." 
+		}
 	
-    }
-	
-    if (results) {	
-	results.each { rkey, rvalue ->
-	   println "$rvalue"
 	}
-	error("Build did not pass sonar settings check")
 	
-    }
+	if (results) {	
+		results.each { rkey, rvalue ->
+			println "$rvalue"
+		}
+	currentBuild.result = 'FAILURE'
+	}
 }
+
