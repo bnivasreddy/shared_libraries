@@ -14,6 +14,12 @@ def getSonarData(sonarProjectId,sonarUrl) {
 
     // null this out so it doesn't cause a serialization issue back in the pipeline
     resources = null
+
+    if (sonarData) {	
+	sonarData.each { rkey, rvalue ->
+	   println "$rkey, $rvalue"
+	}
+    }
     return sonarData
 }
 
