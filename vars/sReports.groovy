@@ -32,6 +32,7 @@ def call(body) {
 		println it.key	
 		metric = projectResource.msr.find { it.key }
 		sonarMetrics[it.key] = metric.val.text()
+		projectResource = resources.resource[0]
 
 	}
 	//resources.resource.msr.each { msr ->
