@@ -1,26 +1,23 @@
-def getSonarData(sonarProjectId,sonarUrl) {
-    def sonarData = [:]
-    // construct the REST API call to get the xml
-    metricsList = metricsToCheck.keySet().join(',')
-    sonarUrl = "${sonarUrl}/api/resources?resource=${sonarProjectId}&format=xml&metrics=${metricsList}"
-    sonarXml = sonarUrl.toURL().text
+def getSonarData(sonarProjectId, sonarUrl) {
+	def sonarData = [:]
 
-    //  parse the xml and fill in the map
-    def resources = new XmlParser().parseText(sonarXml)
-    println sonarXml
-    resources.msr.each { node ->
-  	sonarData[node.key.text()] = node.val.text()
-    }
 
-    // null this out so it doesn't cause a serialization issue back in the pipeline
-    resources = null
+	
+	metricsParam = metricDefinitions.keySet().join(',')
+	sonarUrl = "${sonarUrl}/api/resources?resource=${sonarProjectId}&format=xml&metrics=${metricsParam}"
+	sonarXml = sonarUrl.toURL().text
+        def resources = new XmlParser().parseText(sonarXml)
+	println sonarXml
+	resources.resource[0].msr.each { msr ->
+  		sonarData[msr.key.text()] = msr.val.text()
+  	}
+	resources = null;
 
-    if (sonarData) {	
-	sonarData.each { rkey, rvalue ->
-	   println "$rkey, $rvalue"
-	}
-    }
-    return sonarData
+
+
+
+	return sonarData
+
 }
 
 
@@ -51,8 +48,15 @@ def call(body) {
     def sonarMetrics = [:]
 
     // get the sonar data
-    sonarMetrics = getSonarData(jenkinsValues.sonarProjectId,jenkinsValues.sonarUrl)
+    // sonarMetrics = getSonarData(jenkinsValues.sonarProjectId,jenkinsValues.sonarUrl)
 
+sonarMetrics = getSonarData(jenkinsvalues.sonarProjectId, jenkinsValues.sonarUrl)
+
+if (sonarMetrics) {	
+		sonarMetrics.each { rkey, rvalue ->
+			println "$rkey, $rvalue"
+		}
+}
   
 
    //  do the math to see if we are over or under a limit as appropriate
