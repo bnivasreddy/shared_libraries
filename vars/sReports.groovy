@@ -24,11 +24,11 @@ def call(body) {
 	metricsParam = metricDefinitions.keySet().join(',')
 	sonarUrl = "${sonarUrl}/api/resources?resource=${sonarProjectId}&format=xml&metrics=${metricsParam}"
 	sonarXml = sonarUrl.toURL().text
-        def resources = new XmlParser().parseText(sonarXml)
+        def resources = new XmlSlurper().parseText(sonarXml)
 	resources.resource[0].msr.each { msr ->
   		sonarMetrics[msr.key.text()] = msr.val.text()
   	}
-	resources = null;
+	// resources = null;
 
 	float sonarVal
 	float jenkinsVal
