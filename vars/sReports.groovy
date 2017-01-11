@@ -46,7 +46,7 @@ def call(body) {
 		}
 	}
     // null this out so it doesn't cause a serialization issue back in the pipeline
-    resources = null;
+   // resources = null;
 
    //  do the math to see if we are over or under a limit as appropriate
    float sonarVal
