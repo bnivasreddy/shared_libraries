@@ -50,7 +50,7 @@ def call(body) {
     // get the sonar data
     // sonarMetrics = getSonarData(jenkinsValues.sonarProjectId,jenkinsValues.sonarUrl)
 
-sonarMetrics = getSonarData(jenkinsvalues.sonarProjectId, jenkinsValues.sonarUrl)
+sonarMetrics = getSonarData(jenkinsValues.sonarProjectId, jenkinsValues.sonarUrl)
 
 if (sonarMetrics) {	
 		sonarMetrics.each { rkey, rvalue ->
