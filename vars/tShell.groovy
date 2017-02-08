@@ -7,6 +7,7 @@ def call(body) {
     body()
 
 	/* Run the script that is passed in */
+   node {
 	try {
 		timestamps {
 			def shellOutput = sh(script: "${config.shell_command}", returnStdout: true).trim()
@@ -18,7 +19,7 @@ def call(body) {
                 "Your job failed, please review it ${env.BUILD_URL}.\n\n${failureDetail}")
         throw rethrow
     }
-
+ }
    
 }
 
