@@ -9,12 +9,12 @@ def call(body) {
 	/* Run the script that is passed in */
 	try {
 		timestamps {
-			def shellOutput = sh(script: 'config.shell_command', returnStdout: true).trim()
+			def shellOutput = sh(script: "${config.shell_command}", returnStdout: true).trim()
 		}
   
     } catch (Exception rethrow) {
         failureDetail = failureDetail(rethrow)
-        sendMail(config, "FAILURE: Executing shell command 'config.shell_command in ${env.JOB_NAME}' (${env.BUILD_NUMBER}) failed!",
+        sendMail(config, "FAILURE: Executing shell command ${config.shell_command} in ${env.JOB_NAME}' (${env.BUILD_NUMBER}) failed!",
                 "Your job failed, please review it ${env.BUILD_URL}.\n\n${failureDetail}")
         throw rethrow
     }
