@@ -6,9 +6,10 @@ def getCommand() { commandToRun }
 
 def runCommand() {
 
+      def cmdValue = commandToRun
       timestamps {
 
-            commandOutput = sh( script: "${commandToRun}", returnStdout: true).trim()
+            commandOutput = sh( script: "${cmdValue}", returnStdout: true).trim()
 
        }
 
