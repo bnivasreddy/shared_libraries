@@ -1,6 +1,6 @@
 // vars/acme.groovy
-def setCommand(value) {
-    cmd = value
+def setCommand(commandToRun) {
+    cmd = commandToRun
 }
 def getCommand() {
     cmd
