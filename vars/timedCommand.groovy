@@ -1,6 +1,6 @@
 // vars/timedCommand.groovy
 
-def setCommand (command-to-run) { command = command-to-run }
+def setCommand(value) { commandToRun = value }
 
 def getCommand () { command }
 
