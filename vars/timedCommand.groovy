@@ -1,10 +1,10 @@
 // vars/timedCommand.groovy
 
-def setCommand(command-to-run) { command = command-to-run }
+def setCommand (command-to-run) { command = command-to-run }
 
-def getCommand() { command }
+def getCommand () { command }
 
-def runCommand() {
+def runCommand () {
 
       timestamps {
 
@@ -14,4 +14,4 @@ def runCommand() {
 
 }
 
-def getCommandOutput() { commandOutput }
+def getCommandOutput () { commandOutput }
