@@ -14,7 +14,7 @@ class timedCommand2 implements Serializable {
 
    def runCommand() {
 
-	// echo "foo"        
+	sh "echo foo"        
      //  timestamps {
      //     cmdOut = sh (script:"${cmd}", returnStdout:true).trim()
      //  }
