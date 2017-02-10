@@ -7,5 +7,6 @@ def getCommand() {
 }
 
 def runCommand() {
-    sh "${cmd}"
+   
+    sh script:"${cmd}", returnStdout:true
 }
