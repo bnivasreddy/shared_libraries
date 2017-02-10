@@ -8,5 +8,9 @@ def getCommand() {
 
 def runCommand() {
    
-    sh script:"${cmd}", returnStdout:true
+   cmdOut = sh (script:"${cmd}", returnStdout:true).trim()
+}
+
+def getOutput() {
+   cmdOut
 }
