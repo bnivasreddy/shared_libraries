@@ -7,8 +7,9 @@ def getCommand() {
 }
 
 def runCommand() {
-   
-   cmdOut = sh (script:"${cmd}", returnStdout:true).trim()
+   timestamps {
+      cmdOut = sh (script:"${cmd}", returnStdout:true).trim()
+   }
 }
 
 def getOutput() {
