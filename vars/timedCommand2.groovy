@@ -2,7 +2,7 @@
 class timedCommand2 implements Serializable {
 
     private String cmd
-    String cmdOut
+    private String cmdOut
 
     def setCommand(commandToRun) {
        cmd = commandToRun
@@ -12,9 +12,10 @@ class timedCommand2 implements Serializable {
        cmd
     }
 
+    @NonCPS
     def runCommand() {
        timestamps {
-          sh (script:"${cmd}", returnStdout:true).trim()
+          cmdOut = sh (script:"${cmd}", returnStdout:true).trim()
        }
     }
 
