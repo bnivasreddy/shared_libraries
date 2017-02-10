@@ -8,3 +8,6 @@ def getName() {
 def caution(message) {
     echo "Hello, ${name}! CAUTION: ${message}"
 }
+def run() {
+    sh "echo ${name}"
+}
