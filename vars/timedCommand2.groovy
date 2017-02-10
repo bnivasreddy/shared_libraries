@@ -12,10 +12,10 @@ class timedCommand2 implements Serializable {
        cmd
     }
 
-    @NonCPS
-    def runCommand() {
+   def runCommand() {
+        
        timestamps {
-          cmdOut = sh (script:"${cmd}", returnStdout:true).trim()
+          cmdOut = sh (script:"sleep 5", returnStdout:true).trim()
        }
     }
 
