@@ -9,9 +9,9 @@ Using this function
 To use this function, supply a command to run.
 **timedCommand** will then execute the command.
 
-To see the output, you can use the getOutput method.
+To see the output, you can use this call.
 ----
-   def output = timedCommand.getOutput()
+   echo timedCommand.commandOutput
 ----
 
 
