@@ -1,4 +1,4 @@
-An h1 header
+timedCommand
 ============
 
 This is the documentation for **timedCommand**.
