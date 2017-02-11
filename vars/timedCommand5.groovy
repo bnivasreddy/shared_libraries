@@ -9,5 +9,6 @@ def call(Closure commands) {
       echo "sw.getTime()"
       commands()
       echo "sw.getTime()"
+      delete sw
    }
 }
