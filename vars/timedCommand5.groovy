@@ -8,8 +8,9 @@ def call(String cmdToRun) {
       def sw = new StopWatch()
       echo sw.getTime().toString()
       sh "${cmdToRun}"
+
       echo "end time"
       echo sw.getTime().toString()
-      delete sw
+      // delete sw
    
 }
