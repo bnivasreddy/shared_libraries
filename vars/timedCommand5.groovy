@@ -4,7 +4,7 @@
 import org.apache.commons.lang.time.StopWatch
 
 
-def call(string cmdToRun) { 
+def call(String cmdToRun) { 
       def sw = new StopWatch()
       echo "sw.getTime()"
       sh "${cmdToRun}"
