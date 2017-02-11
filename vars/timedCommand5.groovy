@@ -9,9 +9,9 @@ def call(String cmdToRun) {
       echo sw.getTime().toString()
       echo "${cmdToRun}"
       
-      node {
-       cmdOutput = echo sh (script:'${cmdToRun}', returnStdout:true).trim()
-      }
+      
+      sh (script:'${cmdToRun}', returnStdout:true).trim()
+      
       
       println( "time =  ${sw.getTime().toString()} \n")
       // delete sw
