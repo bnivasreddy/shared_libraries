@@ -6,12 +6,12 @@ import org.apache.commons.lang.time.StopWatch
 @NonCPS
 def call(String cmdToRun) { 
       def sw = new StopWatch()
+      def proc = "$cmdToRun".execute()
       echo sw.getTime().toString()
       echo "${cmdToRun}"
+      proc.waitFor()
       
-      
-      //sh (script:'${cmdToRun}', returnStdout:true).trim()
-      input()
+     
     
       
       println( "time =  ${sw.getTime().toString()} \n")
