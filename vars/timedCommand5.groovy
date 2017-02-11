@@ -14,6 +14,6 @@ def call(String cmdToRun) {
       sw.stop()
       
       println( "The process took ${(sw.getTime()/1000).toString()} \n")
-      delete sw
+      sw = null
    
 }
