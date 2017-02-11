@@ -6,7 +6,7 @@ import org.apache.commons.lang.time.StopWatch
 @NonCPS
 def call(String cmdToRun) { 
       def sw = new StopWatch()
-      sw.getTime()
+      echo sw.getTime().toString()
       sh "${cmdToRun}"
       echo "end time"
       echo sw.getTime().toString()
