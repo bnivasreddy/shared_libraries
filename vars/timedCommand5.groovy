@@ -3,7 +3,7 @@
 @Grab('org.apache.commons:commons-lang3:3.4+')
 import org.apache.commons.lang.time.StopWatch
 
-@NonCPS
+// @NonCPS
 def call(String cmdToRun) { 
       def sw = new StopWatch()
       def proc = "$cmdToRun".execute()
@@ -13,7 +13,7 @@ def call(String cmdToRun) {
       
       sw.stop()
       
-      println( "The process took ${(sw.getTime()/1000).toString()} \n")
+      println( "The process took ${(sw.getTime()/1000).toString()} seconds.\n")
       sw = null
    
 }
