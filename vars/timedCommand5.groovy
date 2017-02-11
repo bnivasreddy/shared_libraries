@@ -10,10 +10,9 @@ def call(String cmdToRun) {
       echo "${cmdToRun}"
       
       // cmdOutput = echo sh (script:'${cmdToRun}', returnStdout:true).trim()
-      sleep 2
+      sleep 3
       
-      echo "end time"
-      echo sw.getTime().toString()
+      println( "time = " sw.getTime().toString()"\n")
       // delete sw
    
 }
