@@ -7,12 +7,11 @@ import org.apache.commons.lang.time.StopWatch
 def call(String cmdToRun) { 
       def sw = new StopWatch()
       def proc = "$cmdToRun".execute()
-      echo sw.getTime().toString()
-      echo "${cmdToRun}"
+      sw.start()
+     
       proc.waitFor()
       
-     
-    
+      sw.stop()
       
       println( "time =  ${sw.getTime().toString()} \n")
       // delete sw
