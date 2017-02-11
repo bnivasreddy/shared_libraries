@@ -11,7 +11,7 @@ def call(String cmdToRun) {
       
       
       //sh (script:'${cmdToRun}', returnStdout:true).trim()
-      echo a
+      input()
     
       
       println( "time =  ${sw.getTime().toString()} \n")
