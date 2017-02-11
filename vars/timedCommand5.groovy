@@ -9,7 +9,8 @@ def call(String cmdToRun) {
       echo sw.getTime().toString()
       echo "${cmdToRun}"
       
-      cmdOutput = echo sh (script:'${cmdToRun}', returnStdout:true).trim()
+      // cmdOutput = echo sh (script:'${cmdToRun}', returnStdout:true).trim()
+      sleep 2
       
       echo "end time"
       echo sw.getTime().toString()
