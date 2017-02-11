@@ -10,5 +10,4 @@ def call(String cmdToRun) {
       proc.waitFor()
       sw.stop()
       println( "The process took ${(sw.getTime()/1000).toString()} seconds.\n")
-      // sw = null
 }
