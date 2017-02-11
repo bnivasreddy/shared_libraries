@@ -13,7 +13,7 @@ def call(String cmdToRun) {
       
       sw.stop()
       
-      println( "time =  ${sw.getTime().toString()} \n")
-      // delete sw
+      println( "The process took ${(sw.getTime()/1000).toString()} \n")
+      delete sw
    
 }
