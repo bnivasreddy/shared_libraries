@@ -12,7 +12,7 @@ def call(String cmdToRun) {
       // cmdOutput = echo sh (script:'${cmdToRun}', returnStdout:true).trim()
       sleep 3
       
-      println( "time = " sw.getTime().toString()"\n")
+      println( "time =  ${sw.getTime().toString()} \n")
       // delete sw
    
 }
