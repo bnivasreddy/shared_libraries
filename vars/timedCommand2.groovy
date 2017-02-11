@@ -1,26 +1,8 @@
-// vars/timedCommand2.groovy
-class timedCommand2 implements Serializable {
+// vars/timedCommand2
 
-    private String cmd
-    private String cmdOut
-
-    def setCommand(commandToRun) {
-       cmd = commandToRun
-    }
-
-    def getCommand() {
-       cmd
-    }
-
-   def runCommand() {
-
-	sh "echo foo"        
-     //  timestamps {
-     //     cmdOut = sh (script:"${cmd}", returnStdout:true).trim()
-     //  }
-    }
-
-    def getOutput() {
-       cmdOut
-    }
+def call (String cmd) {
+   timestamps {
+      cmdOutput = echo sh (script:"${cmd}", returnStdout:true).trim()
+   }
+   echo cmdOutput
 }
