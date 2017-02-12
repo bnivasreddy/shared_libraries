@@ -10,6 +10,7 @@ def runCommand() {
    timestamps {
       cmdOut = sh (script:"${cmd}", returnStdout:true).trim()
    }
+   println "ELAPSED TIME: ${currentBuild.rawBuild.getTimestampString()}"
 }
 
 def getOutput() {
