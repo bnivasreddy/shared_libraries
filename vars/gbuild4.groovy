@@ -1,5 +1,5 @@
 def call (args) {
-   sh "${tool 'gradle3'}/bin/gradle ${args}"
+   sh "${tool 'gradle4'}/bin/gradle ${args}"
 }
 
 
